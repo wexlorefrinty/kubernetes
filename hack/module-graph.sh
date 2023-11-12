@@ -42,17 +42,6 @@ staging_dependencies()
 	go mod graph | grep -E "^${relevant_modules}(@.*| )${relevant_modules}@.*$" | sed -E 's|@\S+ | |g' | sed -E 's|@\S+$||g' | sed -E 's/[\.\/\-]/_/g' | sort | uniq | sed -E 's| | -> |g' | sed -E 's|^|    |g' >> _output/module-dependencies.dot || error_exit "Failed to generate staging dependencies in DOT file"
 }
 
-kubernetes_dependencies()
-{
-	# Generating lines of the form " k8s_io_kubernetes -> k8s_io_api"
-	# Excluding all non Kubernetes dependencies
-	# Trimming away version info
-	# Replacing non DOT (graph description language) characters with underscores
-	# Dedupe lines
-	# Inserting needed arrow.
-	# Indenting the line appropriately
-	go mod graph | grep -E "^.*k8s.io.*k8s.io.*$" | sed -E 's|@\S+ | |g' | sed -E 's|@\S+$||g' | sed -E 's/[\.\/\-]/_/g' | sort | uniq | sed -E 's| | -> |g' | sed -E 's|^|    |g' >> _output/module-dependencies.dot || error_exit "Failed to generate kubernetes dependencies in DOT file"
-}
 
 mkdir -p _output
 echo "digraph module_dependencies {" > _output/module-dependencies.dot || error_exit "Failed to open DOT file"
