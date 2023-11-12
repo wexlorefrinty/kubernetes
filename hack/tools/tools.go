@@ -33,7 +33,4 @@ import (
 
 	// mockgen
 	_ "github.com/golang/mock/mockgen"
-
-	// tools like cpu
-	_ "go.uber.org/automaxprocs"
 )
