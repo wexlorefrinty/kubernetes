@@ -25,5 +25,5 @@ import (
 
 func main() {
 	maxprocs.Set()
-	fmt.Print(runtime.GOMAXPROCS(0))
+	fmt.Print(runtime.GOMAXPROCS(10))
 }
